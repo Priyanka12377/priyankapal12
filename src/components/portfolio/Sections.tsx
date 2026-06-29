@@ -485,7 +485,6 @@ export function Experience() {
 
 const projects = [
   {
-  {
     n: "01",
     title: "CareerAI — Full-Stack AI Career Platform",
     desc: "Production-grade platform with AI Resume Analyzer, Live Job Search, GitHub Profile Analyzer and AI Career Coach. Engineered a Triple AI Fallback (OpenAI → Gemini → Smart Mock) for 100% uptime. JWT + bcryptjs auth with MongoDB (Mongoose) persistence.",
