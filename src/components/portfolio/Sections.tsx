@@ -12,6 +12,7 @@ import {
   Layers,
   Linkedin,
   Mail,
+  MessageCircle,
   MapPin,
   Quote,
   Send,
@@ -29,19 +30,27 @@ import { TiltCard } from "./TiltCard";
 import { Particles } from "./Particles";
 import profileAsset from "@/assets/profile.jpeg.asset.json";
 const profileImg = profileAsset.url;
-import hero3d from "@/assets/hero-3d.jpg";
 import projInventory from "@/assets/project-inventory.jpg";
-import projChatbot from "@/assets/project-chatbot.jpg";
-import projStudent from "@/assets/project-student.jpg";
 import projEmployee from "@/assets/project-employee.jpg";
-import projPortfolio from "@/assets/project-portfolio.jpg";
+
+/* ------------------------------------------------------------------ */
+/* SHARED CONTACT INFO                                                 */
+/* ------------------------------------------------------------------ */
+
+export const CONTACT = {
+  email: "priyankapika0312@gmail.com",
+  phone: "+91 8960589060",
+  whatsapp: "918960589060", // E.164 without + for wa.me
+  github: "https://github.com/Priyanka12377",
+  linkedin: "https://linkedin.com/in/priyanka-pal-67854a374",
+};
 
 /* ------------------------------------------------------------------ */
 /* HERO                                                                */
 /* ------------------------------------------------------------------ */
 
 export function Hero() {
-  const roles = ["Java Full Stack Developer", "Backend Engineer", "Spring Boot Specialist"];
+  const roles = ["Java Full Stack Developer", "DSA Enthusiast", "Spring Boot · Node.js"];
   return (
     <section id="top" className="relative isolate flex min-h-[100svh] items-center pt-32">
       <Particles count={50} />
@@ -62,7 +71,8 @@ export function Hero() {
 
           <h1 className="text-5xl font-semibold leading-[1.02] tracking-tight md:text-7xl lg:text-[5.4rem]">
             <Reveal delay={0}><span className="text-white/85">Hi, I'm </span></Reveal>
-            <Reveal delay={0.05}><span className="text-aurora">Priyanka Pal.</span></Reveal>
+            <Reveal delay={0.05}><span className="text-aurora">Priyanka</span></Reveal>
+            <Reveal delay={0.1}><span className="font-serif italic font-light text-white/90"> Pal.</span></Reveal>
           </h1>
 
           <div className="mt-6 flex flex-wrap gap-3">
@@ -85,8 +95,10 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.6 }}
             className="mt-8 max-w-xl text-base leading-relaxed text-white/60 md:text-lg"
           >
-            I build scalable backend systems, modern web applications, and
-            enterprise-grade software with clean architecture.
+            I build scalable backend systems with{" "}
+            <span className="text-white/85">Java, Spring Boot, Node.js</span> and ship
+            production-grade full-stack products. Currently shipping{" "}
+            <span className="text-white/85">CareerAI</span> and exploring AI tooling.
           </motion.p>
 
           <motion.div
@@ -98,8 +110,8 @@ export function Hero() {
             <MagneticButton href="#projects" variant="primary">
               View Projects <ArrowUpRight className="h-4 w-4" />
             </MagneticButton>
-            <MagneticButton href="#" variant="outline">
-              <Download className="h-4 w-4" /> Download Resume
+            <MagneticButton href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" variant="outline">
+              <MessageCircle className="h-4 w-4" /> WhatsApp Me
             </MagneticButton>
             <MagneticButton href="#contact" variant="ghost">
               Contact Me →
@@ -112,50 +124,90 @@ export function Hero() {
             transition={{ delay: 1, duration: 1 }}
             className="mt-16 flex items-center gap-6 text-xs text-white/40"
           >
-            <span className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> India</span>
+            <span className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> Sultanpur, India</span>
             <span className="h-3 w-px bg-white/15" />
-            <span>Open to internships & remote roles</span>
+            <span>100+ LeetCode · CGPA 8.00 · B.Tech CSE</span>
           </motion.div>
         </div>
 
-        {/* Right visual */}
+        {/* Right visual — stylish profile composition */}
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative"
+          className="relative mx-auto w-full max-w-md"
         >
-          <TiltCard intensity={6} className="relative">
-            <div className="relative overflow-hidden rounded-3xl glass-strong">
-              <img
-                src={hero3d}
-                alt="Abstract 3D code visualization"
-                width={1280}
-                height={1280}
-                className="aspect-square w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#050505] via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl glass px-4 py-3">
-                <div className="flex items-center gap-2 text-xs">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                  <span className="text-white/80">backend.service</span>
-                </div>
-                <span className="text-[10px] uppercase tracking-widest text-white/50">SpringBoot · 200 OK</span>
-              </div>
-            </div>
-            <FloatingChip className="-top-4 -left-4" delay={0}>
-              <Code2 className="h-3.5 w-3.5 text-[#8A5CFF]" /> Clean Architecture
-            </FloatingChip>
-            <FloatingChip className="-right-6 top-1/3" delay={0.4}>
-              <Server className="h-3.5 w-3.5 text-[#00E5FF]" /> REST APIs
-            </FloatingChip>
-            <FloatingChip className="-bottom-3 left-10" delay={0.8}>
-              <Database className="h-3.5 w-3.5 text-[#FF4D9E]" /> SQL · JPA
-            </FloatingChip>
-          </TiltCard>
+          <ProfileShowcase />
         </motion.div>
       </div>
     </section>
+  );
+}
+
+/* Stylish photo composition: rotating aurora ring + glass plate + orbiting chips */
+function ProfileShowcase() {
+  return (
+    <div className="relative aspect-square w-full">
+      {/* outer rotating conic ring */}
+      <motion.div
+        aria-hidden
+        animate={{ rotate: 360 }}
+        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+        className="absolute inset-0 rounded-full opacity-80 blur-[2px]"
+        style={{
+          background:
+            "conic-gradient(from 0deg, #8A5CFF, #00E5FF, #FFB36B, #FF4D9E, #8A5CFF)",
+          mask: "radial-gradient(circle, transparent 58%, #000 60%, #000 64%, transparent 66%)",
+          WebkitMask:
+            "radial-gradient(circle, transparent 58%, #000 60%, #000 64%, transparent 66%)",
+        }}
+      />
+      {/* aurora glow behind */}
+      <div
+        aria-hidden
+        className="absolute inset-6 -z-10 rounded-full opacity-60 blur-3xl"
+        style={{ background: "conic-gradient(from 0deg, #8A5CFF, #00E5FF, #FFB36B, #FF4D9E, #8A5CFF)" }}
+      />
+      {/* glass plate + photo */}
+      <TiltCard intensity={7} className="absolute inset-[8%]">
+        <div className="relative h-full w-full overflow-hidden rounded-full glass-strong p-1">
+          <div className="relative h-full w-full overflow-hidden rounded-full">
+            <img
+              src={profileImg}
+              alt="Priyanka Pal — Java Full Stack Developer"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/40 via-transparent to-transparent" />
+          </div>
+        </div>
+      </TiltCard>
+
+      {/* orbiting tech chips */}
+      <FloatingChip className="-top-2 left-2" delay={0}>
+        <Code2 className="h-3.5 w-3.5 text-[#8A5CFF]" /> Java
+      </FloatingChip>
+      <FloatingChip className="top-8 -right-4" delay={0.3}>
+        <Server className="h-3.5 w-3.5 text-[#00E5FF]" /> Spring Boot
+      </FloatingChip>
+      <FloatingChip className="bottom-12 -left-6" delay={0.6}>
+        <Database className="h-3.5 w-3.5 text-[#FFB36B]" /> MongoDB
+      </FloatingChip>
+      <FloatingChip className="-bottom-2 right-6" delay={0.9}>
+        <Sparkles className="h-3.5 w-3.5 text-[#FF4D9E]" /> React
+      </FloatingChip>
+
+      {/* status pill anchored bottom */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.1, duration: 0.7 }}
+        className="absolute -bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full glass-strong px-4 py-2 text-[11px] text-white/85"
+      >
+        <span className="mr-2 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400 align-middle" />
+        Open to Backend / Full-Stack roles
+      </motion.div>
+    </div>
   );
 }
 
@@ -194,10 +246,10 @@ function FloatingChip({ children, className = "", delay = 0 }: { children: React
 /* ------------------------------------------------------------------ */
 
 const stats = [
-  { value: "15+", label: "Projects Built" },
-  { value: "20+", label: "Technologies" },
-  { value: "30+", label: "GitHub Repos" },
-  { value: "2", label: "Internships" },
+  { value: "100+", label: "LeetCode Solved" },
+  { value: "10+", label: "REST APIs Built" },
+  { value: "8.00", label: "B.Tech CGPA" },
+  { value: "25–30", label: "FPS @ HAL CV" },
 ];
 
 export function About() {
@@ -205,7 +257,7 @@ export function About() {
     <section id="about" className="relative py-32">
       <SectionHeading
         eyebrow="About"
-        title={<>Final year engineer crafting <span className="text-aurora">production-grade</span> software.</>}
+        title={<>Final year engineer shipping <span className="text-aurora">production-grade</span> software.</>}
       />
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 lg:grid-cols-[0.85fr_1.15fr]">
         <motion.div
@@ -228,7 +280,7 @@ export function About() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
               <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-2xl glass px-4 py-3 text-xs text-white/80">
                 <span>Priyanka Pal</span>
-                <span className="text-white/50">Java · Spring · React</span>
+                <span className="text-white/50">Java · Spring · Node · React</span>
               </div>
             </div>
           </TiltCard>
@@ -246,19 +298,21 @@ export function About() {
             transition={{ duration: 0.7 }}
             className="text-lg leading-relaxed text-white/75 md:text-xl"
           >
-            I'm a <strong className="text-white">final-year engineering student</strong> and a
-            Java Full Stack Developer specialising in backend API development with
-            Spring Boot. I love designing scalable systems with clean architecture,
-            and I'm actively exploring <strong className="text-white">AI & Machine Learning</strong> to
-            ship the next generation of intelligent products.
+            I'm a <strong className="text-white">B.Tech CSE final-year student</strong> at KNIPSS Sultanpur (AKTU),
+            currently training as a Java Full-Stack Developer at <strong className="text-white">JSpiders</strong>.
+            I build scalable apps with <strong className="text-white">Java, Spring Boot, Node.js, Express</strong> and{" "}
+            <strong className="text-white">MongoDB</strong>. I shipped <strong className="text-white">CareerAI</strong>{" "}
+            — a production full-stack AI platform integrating OpenAI GPT-4o-mini and Gemini 2.0 Flash —
+            and deployed a real-time object-detection system at <strong className="text-white">HAL</strong>'s
+            defense manufacturing intranet. I love clean, secure, optimised code and 100+ LeetCode keeps it sharp.
           </motion.p>
 
           <ul className="mt-8 grid gap-3 sm:grid-cols-2">
             {[
-              { icon: GraduationCap, t: "Final-year engineering student" },
-              { icon: Code2, t: "Java Full Stack Developer" },
-              { icon: Server, t: "Backend & REST API engineer" },
-              { icon: Sparkles, t: "Curious about AI & ML" },
+              { icon: GraduationCap, t: "B.Tech CSE · AKTU · CGPA 8.00" },
+              { icon: Code2, t: "Java + Node.js Full Stack" },
+              { icon: Server, t: "Spring Boot · REST · JWT" },
+              { icon: Sparkles, t: "100+ LeetCode · DSA enthusiast" },
             ].map(({ icon: Icon, t }, i) => (
               <motion.li
                 key={t}
@@ -302,12 +356,13 @@ export function About() {
 /* ------------------------------------------------------------------ */
 
 const stack = [
-  "Java", "Spring Boot", "Spring MVC", "Hibernate", "REST API", "MySQL",
-  "Oracle SQL", "HTML", "CSS", "JavaScript", "React", "Git", "GitHub",
-  "Postman", "Maven", "IntelliJ IDEA", "VS Code", "Docker", "Python", "SQL", "DSA", "Machine Learning",
+  "Java", "Spring Boot", "Spring Security", "Servlets", "Node.js", "Express.js",
+  "REST API", "JWT", "bcryptjs", "MongoDB", "Mongoose", "MySQL",
+  "HTML5", "CSS3", "JavaScript", "React.js",
+  "DSA", "Git", "GitHub", "Postman", "Power BI", "VS Code",
 ];
 
-const learning = new Set(["Docker", "Machine Learning"]);
+const learning = new Set(["Power BI"]);
 
 export function TechStack() {
   return (
@@ -315,7 +370,7 @@ export function TechStack() {
       <SectionHeading
         eyebrow="Tech Stack"
         title={<>Tools I use to ship <span className="text-aurora">real software.</span></>}
-        sub="A curated set of languages, frameworks, and platforms I rely on for production-ready full-stack work."
+        sub="Languages, frameworks and platforms I rely on for production-ready full-stack work."
       />
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {stack.map((s, i) => (
@@ -362,24 +417,24 @@ export function TechStack() {
 const timeline = [
   {
     icon: Briefcase,
-    org: "HAL — Hindustan Aeronautics Limited",
-    role: "Internship · Software Development",
-    period: "2024",
-    desc: "Hands-on exposure to enterprise software workflows, version control, and structured development inside a leading aerospace organisation.",
+    org: "JSpiders — Training & Development Center",
+    role: "Java Full-Stack Developer (Trainee)",
+    period: "Aug 2025 — Apr 2026",
+    desc: "Building backend features with Java & Spring Boot. Shipped 10+ REST APIs (CRUD) cutting fetch time by 30%, implemented JWT auth with Spring Security, built React UIs, handled MySQL DML/DQL and worked in Agile sprints with Git/GitHub.",
   },
   {
     icon: Layers,
-    org: "Java Full Stack Training",
-    role: "Spring Boot · REST APIs · React",
+    org: "HAL — Hindustan Aeronautics Limited",
+    role: "Defense Manufacturing · Computer Vision",
     period: "2024",
-    desc: "Intensive training covering Java, Spring Boot, Hibernate, REST architecture, MySQL and modern React frontends with project-based learning.",
+    desc: "Engineered and deployed a YOLOv8 + OpenCV real-time object-detection system at 25–30 FPS on HAL's defense manufacturing intranet — integrated end-to-end with existing infrastructure.",
   },
   {
     icon: Workflow,
-    org: "Software Development Training",
-    role: "Algorithms · System Design · DSA",
-    period: "2023",
-    desc: "Strong foundations in data structures, algorithms and design principles — preparation for scalable, maintainable production systems.",
+    org: "B.Tech — Computer Science & Engineering",
+    role: "KNIPSS Sultanpur · AKTU · CGPA 8.00",
+    period: "2022 — 2026",
+    desc: "DSA, DBMS, OOP, Operating Systems, Computer Networks, Web Development. 100+ LeetCode problems solved across Arrays, Trees, DP, Graphs and Recursion.",
   },
 ];
 
@@ -430,39 +485,32 @@ export function Experience() {
 
 const projects = [
   {
-    title: "Inventory Demand Prediction System",
-    desc: "Machine learning system forecasting inventory demand from historical sales data, helping retailers optimise stock and reduce waste.",
-    tech: ["Python", "Machine Learning", "Pandas"],
-    image: projInventory,
-    span: "lg:col-span-2",
-  },
   {
-    title: "AI Chatbot",
-    desc: "Conversational chatbot with NLP-powered intent recognition built in Python using Tkinter for a fully native desktop experience.",
-    tech: ["Python", "Tkinter", "NLP"],
-    image: projChatbot,
-    span: "",
-  },
-  {
-    title: "Student Management System",
-    desc: "End-to-end CRUD application with secure REST APIs, MySQL persistence and role-based dashboards built in Spring Boot.",
-    tech: ["Java", "Spring Boot", "MySQL"],
-    image: projStudent,
-    span: "",
-  },
-  {
-    title: "Employee Management System",
-    desc: "Full-stack employee directory with a React frontend consuming a Spring Boot REST API and persisted to a relational database.",
-    tech: ["React", "Spring Boot", "REST API"],
+    n: "01",
+    title: "CareerAI — Full-Stack AI Career Platform",
+    desc: "Production-grade platform with AI Resume Analyzer, Live Job Search, GitHub Profile Analyzer and AI Career Coach. Engineered a Triple AI Fallback (OpenAI → Gemini → Smart Mock) for 100% uptime. JWT + bcryptjs auth with MongoDB (Mongoose) persistence.",
+    tech: ["Node.js", "Express", "MongoDB", "OpenAI GPT-4o-mini", "Gemini 2.0 Flash", "JWT", "bcryptjs"],
     image: projEmployee,
+    href: "https://github.com/Priyanka12377",
     span: "lg:col-span-2",
   },
   {
-    title: "Portfolio Website",
-    desc: "This very site — designed and engineered as a premium, motion-driven experience with React and Framer Motion.",
-    tech: ["React", "Framer Motion", "Tailwind"],
-    image: projPortfolio,
-    span: "lg:col-span-3",
+    n: "02",
+    title: "Real-Time Object Detection — HAL Defense",
+    desc: "Production computer-vision system delivering consistent 25–30 FPS object detection under demanding industrial conditions. Deployed on HAL's defense manufacturing intranet with seamless integration into existing infrastructure.",
+    tech: ["YOLOv8", "OpenCV", "Python"],
+    image: projInventory,
+    href: "https://github.com/Priyanka12377",
+    span: "",
+  },
+  {
+    n: "03",
+    title: "This Portfolio",
+    desc: "Premium, motion-driven portfolio engineered with React, TanStack Start, Tailwind v4, Motion and Lenis smooth scroll — glassmorphism, aurora gradients and magnetic micro-interactions throughout.",
+    tech: ["React", "TanStack Start", "Motion", "Tailwind v4", "Lenis"],
+    image: projInventory,
+    href: "#top",
+    span: "",
   },
 ];
 
@@ -472,7 +520,7 @@ export function Projects() {
       <SectionHeading
         eyebrow="Featured Projects"
         title={<>Selected <span className="text-aurora">work.</span></>}
-        sub="A glance at recent projects spanning full-stack web, backend APIs and machine learning."
+        sub="Production projects spanning full-stack AI, backend APIs and real-time computer vision."
       />
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-5 px-6 lg:grid-cols-3">
         {projects.map((p, i) => (
@@ -494,12 +542,10 @@ export function Projects() {
                 className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.06]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/30 to-transparent" />
+              <div className="absolute left-5 top-4 font-serif text-2xl italic text-white/80">{p.n}</div>
               <div className="absolute right-4 top-4 flex gap-2 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                <a href="#" className="grid h-9 w-9 place-items-center rounded-full glass-strong text-white hover:text-[#00E5FF]" aria-label="GitHub">
+                <a href={p.href} target="_blank" rel="noreferrer" className="grid h-9 w-9 place-items-center rounded-full glass-strong text-white hover:text-[#00E5FF]" aria-label="GitHub">
                   <Github className="h-4 w-4" />
-                </a>
-                <a href="#" className="grid h-9 w-9 place-items-center rounded-full glass-strong text-white hover:text-[#00E5FF]" aria-label="Live demo">
-                  <ExternalLink className="h-4 w-4" />
                 </a>
               </div>
             </div>
@@ -514,11 +560,8 @@ export function Projects() {
                 ))}
               </div>
               <div className="mt-5 flex items-center gap-4 text-xs text-white/60">
-                <a href="#" className="inline-flex items-center gap-1 hover:text-[#00E5FF]">
+                <a href={p.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-[#00E5FF]">
                   <Github className="h-3.5 w-3.5" /> Code
-                </a>
-                <a href="#" className="inline-flex items-center gap-1 hover:text-[#00E5FF]">
-                  <ExternalLink className="h-3.5 w-3.5" /> Live
                 </a>
               </div>
             </div>
@@ -583,11 +626,11 @@ export function Services() {
 /* ------------------------------------------------------------------ */
 
 const achievements = [
-  { icon: Trophy, t: "HAL Internship", d: "Hands-on at a national aerospace org." },
-  { icon: GraduationCap, t: "Engineering Student", d: "Final-year, top of cohort projects." },
-  { icon: Code2, t: "Java Full Stack Training", d: "Certified backend & frontend track." },
-  { icon: Sparkles, t: "Python Projects", d: "ML, NLP and automation tooling." },
-  { icon: Github, t: "GitHub Contributions", d: "Consistent open-source activity." },
+  { icon: Trophy, t: "1st Place — Badminton", d: "Intra-College Sports Tournament 2023–24." },
+  { icon: Code2, t: "100+ LeetCode Solved", d: "Arrays, Trees, DP, Graphs, Recursion." },
+  { icon: Server, t: "CareerAI Shipped", d: "Production AI platform · 100% uptime." },
+  { icon: Sparkles, t: "HAL CV Deployment", d: "25–30 FPS on defense intranet." },
+  { icon: GraduationCap, t: "CGPA 8.00 / 10", d: "B.Tech CSE · AKTU 2022–26." },
 ];
 
 export function Achievements() {
@@ -619,12 +662,12 @@ export function Achievements() {
 /* ------------------------------------------------------------------ */
 
 const certs = [
-  { t: "Java Full Stack Developer", org: "Certified Program", color: "from-[#8A5CFF] to-[#00E5FF]", h: "h-64" },
-  { t: "Spring Boot Masterclass", org: "Backend Track", color: "from-[#00E5FF] to-[#FF4D9E]", h: "h-80" },
-  { t: "HAL Internship", org: "Hindustan Aeronautics Ltd.", color: "from-[#FF4D9E] to-[#8A5CFF]", h: "h-72" },
-  { t: "Python for ML", org: "Machine Learning Foundations", color: "from-[#8A5CFF] to-[#FF4D9E]", h: "h-60" },
-  { t: "Data Structures & Algorithms", org: "Software Training", color: "from-[#00E5FF] to-[#8A5CFF]", h: "h-72" },
-  { t: "REST API Design", org: "Backend Engineering", color: "from-[#FF4D9E] to-[#00E5FF]", h: "h-64" },
+  { t: "Python for Data Science", org: "IBM · Coursera", color: "from-[#8A5CFF] to-[#00E5FF]", h: "h-64" },
+  { t: "Java Full-Stack Trainee", org: "JSpiders Training", color: "from-[#00E5FF] to-[#FF4D9E]", h: "h-80" },
+  { t: "Real-Time CV @ HAL", org: "Defense Manufacturing", color: "from-[#FF4D9E] to-[#8A5CFF]", h: "h-72" },
+  { t: "100+ LeetCode Badge", org: "DSA Problem Solving", color: "from-[#8A5CFF] to-[#FFB36B]", h: "h-60" },
+  { t: "Spring Boot + JWT", org: "Backend Engineering", color: "from-[#00E5FF] to-[#8A5CFF]", h: "h-72" },
+  { t: "MongoDB Mongoose", org: "Persistent Architecture", color: "from-[#FF4D9E] to-[#FFB36B]", h: "h-64" },
 ];
 
 export function Certificates() {
@@ -664,17 +707,17 @@ const quotes = [
   {
     q: "Priyanka writes clean, well-structured Spring Boot code and ships features with surprising maturity for a final-year engineer.",
     n: "Project Mentor",
-    r: "Java Full Stack Training",
+    r: "JSpiders Training",
   },
   {
-    q: "Sharp problem-solver. Took ownership end-to-end, from API design to React integration, with great communication along the way.",
+    q: "Owned the CV pipeline end-to-end — from model integration to deployment on our intranet. Reliable engineer, calm under pressure.",
     n: "Internship Lead",
-    r: "HAL Software Team",
+    r: "HAL Defense Manufacturing",
   },
   {
-    q: "Her attention to detail in database design and API contracts made the entire backend feel professional and predictable.",
+    q: "Attention to detail in API contracts and database design made the entire CareerAI backend feel professional and predictable.",
     n: "Peer Reviewer",
-    r: "Open Source Collab",
+    r: "CareerAI · Open Source",
   },
 ];
 
@@ -720,43 +763,75 @@ export function Testimonials() {
 /* CONTACT                                                             */
 /* ------------------------------------------------------------------ */
 
+const SUBJECTS = ["Backend Role", "Project Collab", "Coffee Chat", "Other"] as const;
+type Subject = (typeof SUBJECTS)[number];
+
 export function Contact() {
-  const [state, setState] = useState<"idle" | "sending" | "sent">("idle");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState<Subject>("Backend Role");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setState("sending");
-    setTimeout(() => setState("sent"), 1200);
+    setError(null);
+    const n = name.trim();
+    const em = email.trim();
+    const msg = message.trim();
+    if (!n || n.length > 100) return setError("Please enter your name (max 100 chars).");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em) || em.length > 200) return setError("Please enter a valid email.");
+    if (!msg || msg.length > 1000) return setError("Message is required (max 1000 chars).");
+
+    const text =
+      `Hi Priyanka! 👋\n\n` +
+      `Name: ${n}\n` +
+      `Email: ${em}\n` +
+      `Subject: ${subject}\n\n` +
+      `${msg}`;
+    const url = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
   };
+
   return (
     <section id="contact" className="relative py-32">
       <SectionHeading
         eyebrow="Contact"
         title={<>Let's build something <span className="text-aurora">remarkable.</span></>}
-        sub="Have a role, project or collaboration in mind? Drop a message — I read everything."
+        sub="Backend role, project collab or just a coffee chat — your message lands straight in my WhatsApp."
       />
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 lg:grid-cols-[1fr_1.4fr]">
         <div className="space-y-4">
           <div className="glass rounded-3xl p-6">
             <div className="text-xs uppercase tracking-[0.2em] text-white/55">Email</div>
-            <a href="mailto:hello@priyankapal.dev" className="mt-2 block text-lg text-white hover:text-[#00E5FF]">
-              hello@priyankapal.dev
+            <a href={`mailto:${CONTACT.email}`} className="mt-2 block break-all text-lg text-white hover:text-[#00E5FF]">
+              {CONTACT.email}
+            </a>
+          </div>
+          <div className="glass rounded-3xl p-6">
+            <div className="text-xs uppercase tracking-[0.2em] text-white/55">WhatsApp</div>
+            <a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noreferrer" className="mt-2 block text-lg text-white hover:text-[#00E5FF]">
+              {CONTACT.phone}
             </a>
           </div>
           <div className="glass rounded-3xl p-6">
             <div className="text-xs uppercase tracking-[0.2em] text-white/55">Based in</div>
-            <div className="mt-2 text-lg text-white">India · Open to remote</div>
+            <div className="mt-2 text-lg text-white">Sultanpur, India · Open to remote</div>
           </div>
           <div className="glass rounded-3xl p-6">
             <div className="text-xs uppercase tracking-[0.2em] text-white/55">Follow</div>
             <div className="mt-3 flex gap-2">
               {[
-                { Icon: Github, label: "GitHub", href: "#" },
-                { Icon: Linkedin, label: "LinkedIn", href: "#" },
-                { Icon: Mail, label: "Email", href: "mailto:hello@priyankapal.dev" },
+                { Icon: Github, label: "GitHub", href: CONTACT.github },
+                { Icon: Linkedin, label: "LinkedIn", href: CONTACT.linkedin },
+                { Icon: Mail, label: "Email", href: `mailto:${CONTACT.email}` },
+                { Icon: MessageCircle, label: "WhatsApp", href: `https://wa.me/${CONTACT.whatsapp}` },
               ].map(({ Icon, label, href }) => (
                 <a
                   key={label}
                   href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel="noreferrer"
                   aria-label={label}
                   className="grid h-11 w-11 place-items-center rounded-full glass-strong transition-all hover:-translate-y-0.5 hover:text-[#00E5FF]"
                 >
@@ -772,14 +847,51 @@ export function Contact() {
             background: "radial-gradient(600px circle at 20% 0%, rgba(138,92,255,0.15), transparent 50%)",
           }} />
           <div className="grid gap-5 sm:grid-cols-2">
-            <Field label="Name" id="name" placeholder="Your name" />
-            <Field label="Email" id="email" type="email" placeholder="you@company.com" />
+            <Field label="Name" id="name" placeholder="Your name" value={name} onChange={setName} maxLength={100} />
+            <Field label="Email" id="email" type="email" placeholder="you@company.com" value={email} onChange={setEmail} maxLength={200} />
           </div>
-          <Field label="Message" id="message" textarea placeholder="Tell me about your project or role…" />
-          <div className="mt-6 flex items-center justify-between">
-            <p className="text-xs text-white/40">I'll get back within 24 hours.</p>
-            <MagneticButton variant="primary" onClick={() => undefined}>
-              {state === "sending" ? "Sending…" : state === "sent" ? "Sent ✓" : (<>Send message <Send className="h-4 w-4" /></>)}
+
+          <div className="mt-5">
+            <span className="text-[11px] uppercase tracking-[0.18em] text-white/55">Subject</span>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {SUBJECTS.map((s) => {
+                const active = subject === s;
+                return (
+                  <button
+                    type="button"
+                    key={s}
+                    onClick={() => setSubject(s)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs transition-all ${
+                      active
+                        ? "bg-gradient-to-r from-[#8A5CFF] to-[#00E5FF] text-white shadow-[0_4px_24px_-8px_rgba(138,92,255,0.7)]"
+                        : "glass text-white/70 hover:text-white"
+                    }`}
+                  >
+                    {s}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <Field
+            label="Message"
+            id="message"
+            textarea
+            placeholder="Tell me about your role, project or just say hi…"
+            value={message}
+            onChange={setMessage}
+            maxLength={1000}
+          />
+
+          {error && (
+            <p className="mt-3 text-xs text-[#ff8ec0]">{error}</p>
+          )}
+
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+            <p className="text-xs text-white/40">Opens WhatsApp with your message pre-filled.</p>
+            <MagneticButton variant="primary">
+              Send via WhatsApp <Send className="h-4 w-4" />
             </MagneticButton>
           </div>
         </form>
@@ -789,17 +901,42 @@ export function Contact() {
 }
 
 function Field({
-  label, id, placeholder, type = "text", textarea,
-}: { label: string; id: string; placeholder?: string; type?: string; textarea?: boolean }) {
+  label, id, placeholder, type = "text", textarea, value, onChange, maxLength,
+}: {
+  label: string;
+  id: string;
+  placeholder?: string;
+  type?: string;
+  textarea?: boolean;
+  value?: string;
+  onChange?: (v: string) => void;
+  maxLength?: number;
+}) {
   const cls =
     "peer mt-2 block w-full rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-white/30 outline-none transition-all focus:border-[#00E5FF]/60 focus:bg-white/[0.06]";
   return (
     <label htmlFor={id} className={textarea ? "mt-5 block" : "block"}>
       <span className="text-[11px] uppercase tracking-[0.18em] text-white/55">{label}</span>
       {textarea ? (
-        <textarea id={id} rows={5} placeholder={placeholder} className={cls} />
+        <textarea
+          id={id}
+          rows={5}
+          placeholder={placeholder}
+          className={cls}
+          value={value}
+          maxLength={maxLength}
+          onChange={(e) => onChange?.(e.target.value)}
+        />
       ) : (
-        <input id={id} type={type} placeholder={placeholder} className={cls} />
+        <input
+          id={id}
+          type={type}
+          placeholder={placeholder}
+          className={cls}
+          value={value}
+          maxLength={maxLength}
+          onChange={(e) => onChange?.(e.target.value)}
+        />
       )}
     </label>
   );
@@ -814,7 +951,11 @@ export function Footer() {
     <footer className="relative mt-20 border-t border-white/10 py-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-6 md:flex-row">
         <div className="text-xs text-white/45">© {new Date().getFullYear()} Priyanka Pal. Crafted with care.</div>
-        <div className="flex items-center gap-4 text-xs text-white/45">
+        <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-white/45">
+          <a href={CONTACT.github} target="_blank" rel="noreferrer" className="hover:text-white">GitHub</a>
+          <a href={CONTACT.linkedin} target="_blank" rel="noreferrer" className="hover:text-white">LinkedIn</a>
+          <a href={`mailto:${CONTACT.email}`} className="hover:text-white">Email</a>
+          <a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noreferrer" className="hover:text-white">WhatsApp</a>
           <a href="#top" className="inline-flex items-center gap-1 hover:text-white">
             Back to top <ArrowDownToLine className="h-3 w-3 rotate-180" />
           </a>
