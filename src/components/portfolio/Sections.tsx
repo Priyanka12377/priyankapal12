@@ -54,7 +54,7 @@ export const CONTACT = {
 
 function HeroPhotoSlider() {
   const [idx, setIdx] = useState(0);
-  const photos = [photo1Asset.url, photo2Asset.url];
+  const photos = [photo1Asset, photo2Asset];
 
   return (
     <div className="relative h-full w-full overflow-hidden rounded-full">
@@ -287,7 +287,7 @@ const stats = [
   { value: "100+", label: "LeetCode Solved" },
   { value: "10+", label: "REST APIs Built" },
   { value: "8.11", label: "B.Tech CGPA" },
-  { value: "25–30", label: "FPS @ HAL CV" },
+  { value: "25–30", label: "HAL CV" },
 ];
 
 export function About() {
@@ -309,7 +309,7 @@ export function About() {
             <div className="relative overflow-hidden rounded-3xl glass-strong">
               <div className="aspect-[4/5] w-full overflow-hidden">
                 <img
-                  src={aboutPicAsset.url}
+                  src={aboutPicAsset}
                   alt="Priyanka Pal"
                   className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                 />
@@ -394,7 +394,7 @@ export function About() {
 const stack = [
   "Java", "Spring Boot", "Spring Security", "Servlets",
   "REST API", "JWT", "bcryptjs", "MongoDB", "Mongoose", "MySQL", "SQL",
-  "HTML5", "CSS", "JavaScript", "React.js",
+  "HTML5", "CSS", "JavaScript"
   "DSA", "Git", "GitHub", "Postman", "VS Code",
 ];
 
@@ -462,14 +462,14 @@ const timeline = [
     icon: Zap,
     org: "AI Full Stack & Backend Freelancing",
     role: "Independent Freelance Engineer",
-    period: "2024 — Present",
+    period: "2025 — Present",
     desc: "Delivering fast, high-quality full-stack and backend solutions for clients leveraging cutting-edge AI coding workflows. Specialized in rapid prototyping, enterprise Spring Boot APIs, and AI integrations. Open for both Online and Offline opportunities globally.",
   },
   {
     icon: Layers,
     org: "HAL — Hindustan Aeronautics Limited",
     role: "Internship Trainee",
-    period: "2024",
+    period: "2025",
     desc: "Worked on practical internship assignments and gained valuable hands-on exposure to enterprise engineering environments, defense aerospace systems workflows, and structured problem solving.",
   },
   {
@@ -477,7 +477,7 @@ const timeline = [
     org: "B.Tech — Computer Science & Engineering",
     role: "KNIPSS Sultanpur · AKTU · CGPA 8.11",
     period: "2022 — 2026 (Completed Final Year)",
-    desc: "DSA, DBMS, OOP, Operating Systems, Computer Networks, Web Development. 100+ LeetCode problems solved across Arrays, Trees, DP, Graphs and Recursion.",
+    desc: "DSA, DBMS, OOP, Operating Systems, Computer Networks, Web Development.  LeetCode problems solved across Arrays, Trees, DP, Graphs and Recursion.",
   },
 ];
 
@@ -705,7 +705,7 @@ export function Services() {
 
 const achievements = [
   { icon: Trophy, t: "1st Place — Badminton", d: "Intra-College Sports Tournament 2023–24." },
-  { icon: Code2, t: "100+ LeetCode Solved", d: "Arrays, Strings, Trees, DP & Graphs." },
+  { icon: Code2, t:  "LeetCode Solved", d: "Arrays, Strings, Trees, DP & Graphs." },
   { icon: Server, t: "CareerAI Shipped", d: "Production AI platform · 100% uptime." },
   { icon: GraduationCap, t: "CGPA 8.11 / 10", d: "B.Tech CSE · AKTU 2022–26." },
 ];
@@ -742,7 +742,7 @@ const certs = [
   { t: "Python for Data Science", org: "IBM · Coursera", color: "from-[#8A5CFF] to-[#00E5FF]" },
   { t: "Java Full Stack Developer", org: "JSpiders Training", color: "from-[#00E5FF] to-[#FF4D9E]" },
   { t: "Defense Training Exposure", org: "HAL Aerospace", color: "from-[#FF4D9E] to-[#8A5CFF]" },
-  { t: "100+ DSA Problem Solving", org: "LeetCode Platform", color: "from-[#8A5CFF] to-[#FFB36B]" },
+  { t: "DSA Problem Solving", org: "LeetCode Platform", color: "from-[#8A5CFF] to-[#FFB36B]" },
   { t: "Spring Boot Backend Systems", org: "Backend Specialization", color: "from-[#00E5FF] to-[#8A5CFF]" },
   { t: "Add Certificate in Future", org: "Pending Recognition", color: "from-[#FF4D9E] to-[#00E5FF]", isFuture: true },
 ];
@@ -854,7 +854,7 @@ export function Testimonials() {
 /* CONTACT                                                             */
 /* ------------------------------------------------------------------ */
 
-const SUBJECTS = ["Backend Role", "Project Collab", "Coffee Chat", "Other"] as const;
+const SUBJECTS = ["Backend Role", "Project Collab", "Coffee Chat"] as const;
 type Subject = (typeof SUBJECTS)[number];
 
 export function Contact() {
