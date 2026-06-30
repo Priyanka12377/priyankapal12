@@ -394,7 +394,7 @@ export function About() {
 const stack = [
   "Java", "Spring Boot", "Spring Security", "Servlets",
   "REST API", "JWT", "bcryptjs", "MongoDB", "Mongoose", "MySQL", "SQL",
-  "HTML5", "CSS", "JavaScript"
+  "HTML5", "CSS", "JavaScript",
   "DSA", "Git", "GitHub", "Postman", "VS Code",
 ];
 
