@@ -30,9 +30,9 @@ import { MagneticButton } from "./MagneticButton";
 import { SectionHeading } from "./SectionHeading";
 import { TiltCard } from "./TiltCard";
 import { Particles } from "./Particles";
-import photo1Asset from "@/assets/photo1.png.asset.json";
-import photo2Asset from "@/assets/photo2.png.asset.json";
-import aboutPicAsset from "@/assets/about-pic.png.asset.json";
+import photo1Asset from "@/assets/photo1.png";
+import photo2Asset from "@/assets/photo2.png";
+import aboutPicAsset from "@/assets/about-pic.png";
 import projInventory from "@/assets/project-inventory.jpg";
 import projEmployee from "@/assets/project-employee.jpg";
 
