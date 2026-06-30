@@ -32,6 +32,7 @@ import { TiltCard } from "./TiltCard";
 import { Particles } from "./Particles";
 import photo1Asset from "@/assets/photo1.png.asset.json";
 import photo2Asset from "@/assets/photo2.png.asset.json";
+import aboutPicAsset from "@/assets/about-pic.png.asset.json";
 import projInventory from "@/assets/project-inventory.jpg";
 import projEmployee from "@/assets/project-employee.jpg";
 
@@ -295,18 +296,17 @@ export function About() {
         >
           <TiltCard intensity={5}>
             <div className="relative overflow-hidden rounded-3xl glass-strong">
-                <HeroPhotoSlider />
-                <div className="aspect-[4/5] w-full hidden">
-                <img src={photo1Asset.url}
-                alt="Portrait of Priyanka Pal"
-                width={896}
-                height={1152}
-                loading="lazy"
-                /></div>
+              <div className="aspect-[4/5] w-full overflow-hidden">
+                <img
+                  src={aboutPicAsset.url}
+                  alt="Priyanka Pal"
+                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                />
+              </div>
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
               <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-2xl glass px-4 py-3 text-xs text-white/80">
                 <span>Priyanka Pal</span>
-                <span className="text-white/50">Java · Spring · Node · React</span>
+                <span className="text-white/50">Java · Spring Boot</span>
               </div>
             </div>
           </TiltCard>
@@ -325,12 +325,11 @@ export function About() {
             className="text-lg leading-relaxed text-white/75 md:text-xl"
           >
             I'm a <strong className="text-white">B.Tech CSE final-year student</strong> at KNIPSS Sultanpur (AKTU),
-            currently training as a Java Full Stack Developer at <strong className="text-white">JSpiders</strong>.
+            having completed my final year and currently training as a Java Full Stack Developer at <strong className="text-white">JSpiders</strong>.
             I build scalable websites with <strong className="text-white">Java, Spring Boot, SQL</strong> and{" "}
             <strong className="text-white">MongoDB</strong>. I shipped <strong className="text-white">CareerAI</strong>{" "}
             — a production full-stack AI platform integrating OpenAI GPT-4o-mini and Gemini 2.0 Flash —
-            and deployed a real-time object-detection system at <strong className="text-white">HAL</strong>'s
-            defense manufacturing intranet. I love clean, secure, optimised code and 100+ LeetCode keeps it sharp.
+            and gained hands-on practical industrial learning at <strong className="text-white">HAL</strong> defense aerospace workflows. I love clean, secure, optimised enterprise code and 100+ LeetCode keeps my DSA sharp.
           </motion.p>
 
           <ul className="mt-8 grid gap-3 sm:grid-cols-2">
@@ -449,6 +448,13 @@ const timeline = [
     desc: "Learning real working industry standards and practical developer workflows. Hands-on training in enterprise Java, Spring Boot microservices, database architecture, and Agile collaboration. During this training, actively working on an AI Agent for their websites.",
   },
   {
+    icon: Zap,
+    org: "AI Full Stack & Backend Freelancing",
+    role: "Independent Freelance Engineer",
+    period: "2024 — Present",
+    desc: "Delivering fast, high-quality full-stack and backend solutions for clients leveraging cutting-edge AI coding workflows. Specialized in rapid prototyping, enterprise Spring Boot APIs, and AI integrations. Open for both Online and Offline opportunities globally.",
+  },
+  {
     icon: Layers,
     org: "HAL — Hindustan Aeronautics Limited",
     role: "Internship Trainee",
@@ -459,7 +465,7 @@ const timeline = [
     icon: Workflow,
     org: "B.Tech — Computer Science & Engineering",
     role: "KNIPSS Sultanpur · AKTU · CGPA 8.11",
-    period: "2022 — 2026 (Final Year Complete Student)",
+    period: "2022 — 2026 (Completed Final Year)",
     desc: "DSA, DBMS, OOP, Operating Systems, Computer Networks, Web Development. 100+ LeetCode problems solved across Arrays, Trees, DP, Graphs and Recursion.",
   },
 ];
@@ -733,7 +739,7 @@ const certs = [
 export function Certificates() {
   return (
     <section className="relative py-32">
-      <SectionHeading eyebrow="Certificates" title={<>Recognised <span className="text-aurora">credentials.</span></>} />
+      <SectionHeading eyebrow="Certificates" title={<>Recognised <span className="text-aurora">credentials.</span></>} sub="Verified certificates from industry platforms. You can view all official certs directly on my LinkedIn profile." />
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 px-6 sm:grid-cols-2 lg:grid-cols-3">
         {certs.map((c, i) => (
           <motion.div
@@ -743,20 +749,29 @@ export function Certificates() {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: (i % 3) * 0.06 }}
           >
-            <div className="group relative overflow-hidden rounded-3xl glass min-h-[180px] flex flex-col justify-between p-7 hover:border-white/20 transition-all">
+            <a
+              href={CONTACT.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              className="group relative overflow-hidden rounded-3xl glass min-h-[200px] flex flex-col justify-between p-7 hover:border-[#00E5FF]/40 transition-all block cursor-pointer"
+            >
               <div className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${c.color} opacity-25 transition-opacity duration-500 group-hover:opacity-50`} />
               <div className="flex justify-between items-start">
                 <div className="text-xs uppercase tracking-[0.18em] text-white/60">{c.org}</div>
-                <div className="grid h-10 w-10 place-items-center rounded-full glass-strong">
+                <div className="grid h-10 w-10 place-items-center rounded-full glass-strong group-hover:bg-[#00E5FF] group-hover:text-black transition-colors text-white">
                   {c.isFuture ? (
-                    <Plus className="h-5 w-5 text-[#00E5FF] animate-pulse" />
+                    <Plus className="h-5 w-5 animate-pulse" />
                   ) : (
-                    <Star className="h-4 w-4 text-[#00E5FF]" />
+                    <ExternalLink className="h-4 w-4" />
                   )}
                 </div>
               </div>
               <div className="mt-6 text-xl font-semibold text-white tracking-tight">{c.t}</div>
-            </div>
+              <div className="mt-4 flex items-center gap-1.5 text-[11px] font-medium text-[#00E5FF]/80 group-hover:text-[#00E5FF]">
+                <span>View certificate on LinkedIn</span>
+                <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </div>
+            </a>
           </motion.div>
         ))}
       </div>
