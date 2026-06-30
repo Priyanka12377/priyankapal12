@@ -175,6 +175,17 @@ export function Hero() {
           <ProfileShowcase />
         </motion.div>
       </div>
+      <div className="mt-14 text-center">
+        <a
+          href={CONTACT.linkedin}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 rounded-full glass-strong border border-white/10 px-6 py-3 text-sm font-medium text-white transition-all hover:border-[#00E5FF]/50 hover:bg-[#00E5FF]/10 hover:text-[#00E5FF]"
+        >
+          <Sparkles className="h-4 w-4 text-[#00E5FF]" />
+          <span>You can see all my verified certs on LinkedIn — check the receipts right here ↗</span>
+        </a>
+      </div>
     </section>
   );
 }
