@@ -22,14 +22,16 @@ import {
   Trophy,
   Workflow,
   Zap,
+  Plus,
+  Bot,
 } from "lucide-react";
 import { useState } from "react";
 import { MagneticButton } from "./MagneticButton";
 import { SectionHeading } from "./SectionHeading";
 import { TiltCard } from "./TiltCard";
 import { Particles } from "./Particles";
-import profileAsset from "@/assets/profile.jpeg.asset.json";
-const profileImg = profileAsset.url;
+import photo1Asset from "@/assets/photo1.png.asset.json";
+import photo2Asset from "@/assets/photo2.png.asset.json";
 import projInventory from "@/assets/project-inventory.jpg";
 import projEmployee from "@/assets/project-employee.jpg";
 
@@ -48,6 +50,38 @@ export const CONTACT = {
 /* ------------------------------------------------------------------ */
 /* HERO                                                                */
 /* ------------------------------------------------------------------ */
+
+function HeroPhotoSlider() {
+  const [idx, setIdx] = useState(0);
+  const photos = [photo1Asset.url, photo2Asset.url];
+
+  return (
+    <div className="relative h-full w-full overflow-hidden rounded-full">
+      <motion.img
+        key={idx}
+        initial={{ opacity: 0, scale: 1.05 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        src={photos[idx]}
+        alt="Priyanka Pal — Java Full Stack Developer"
+        className="h-full w-full object-cover cursor-pointer"
+        onClick={() => setIdx((idx + 1) % photos.length)}
+      />
+      <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/50 via-transparent to-transparent pointer-events-none" />
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+        {photos.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setIdx(i)}
+            className={`h-1.5 rounded-full transition-all ${i === idx ? "w-6 bg-[#00E5FF]" : "w-1.5 bg-white/40"}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function Hero() {
   const roles = ["Java Full Stack Developer", "DSA Enthusiast", "Spring Boot · Node.js"];
@@ -95,9 +129,9 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.6 }}
             className="mt-8 max-w-xl text-base leading-relaxed text-white/60 md:text-lg"
           >
-            I build scalable backend systems with{" "}
-            <span className="text-white/85">Java, Spring Boot, Node.js</span> and ship
-            production-grade full-stack products. Currently shipping{" "}
+            I build scalable websites with{" "}
+            <span className="text-white/85">Java, Spring Boot, SQL, MongoDB</span> and ship
+            production-grade software. Currently shipping{" "}
             <span className="text-white/85">CareerAI</span> and exploring AI tooling.
           </motion.p>
 
@@ -126,7 +160,7 @@ export function Hero() {
           >
             <span className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> Sultanpur, India</span>
             <span className="h-3 w-px bg-white/15" />
-            <span>100+ LeetCode · CGPA 8.00 · B.Tech CSE</span>
+            <span>100+ LeetCode · CGPA 8.11 · B.Tech CSE</span>
           </motion.div>
         </div>
 
@@ -171,15 +205,7 @@ function ProfileShowcase() {
       {/* glass plate + photo */}
       <TiltCard intensity={7} className="absolute inset-[8%]">
         <div className="relative h-full w-full overflow-hidden rounded-full glass-strong p-1">
-          <div className="relative h-full w-full overflow-hidden rounded-full">
-            <img
-              src={profileImg}
-              alt="Priyanka Pal — Java Full Stack Developer"
-              className="h-full w-full object-cover"
-            />
-            <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/40 via-transparent to-transparent" />
-          </div>
+          <HeroPhotoSlider />
         </div>
       </TiltCard>
 
@@ -248,7 +274,7 @@ function FloatingChip({ children, className = "", delay = 0 }: { children: React
 const stats = [
   { value: "100+", label: "LeetCode Solved" },
   { value: "10+", label: "REST APIs Built" },
-  { value: "8.00", label: "B.Tech CGPA" },
+  { value: "8.11", label: "B.Tech CGPA" },
   { value: "25–30", label: "FPS @ HAL CV" },
 ];
 
@@ -269,14 +295,14 @@ export function About() {
         >
           <TiltCard intensity={5}>
             <div className="relative overflow-hidden rounded-3xl glass-strong">
-              <img
-                src={profileImg}
+                <HeroPhotoSlider />
+                <div className="aspect-[4/5] w-full hidden">
+                <img src={photo1Asset.url}
                 alt="Portrait of Priyanka Pal"
                 width={896}
                 height={1152}
                 loading="lazy"
-                className="aspect-[4/5] w-full object-cover"
-              />
+                /></div>
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
               <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between rounded-2xl glass px-4 py-3 text-xs text-white/80">
                 <span>Priyanka Pal</span>
@@ -299,8 +325,8 @@ export function About() {
             className="text-lg leading-relaxed text-white/75 md:text-xl"
           >
             I'm a <strong className="text-white">B.Tech CSE final-year student</strong> at KNIPSS Sultanpur (AKTU),
-            currently training as a Java Full-Stack Developer at <strong className="text-white">JSpiders</strong>.
-            I build scalable apps with <strong className="text-white">Java, Spring Boot, Node.js, Express</strong> and{" "}
+            currently training as a Java Full Stack Developer at <strong className="text-white">JSpiders</strong>.
+            I build scalable websites with <strong className="text-white">Java, Spring Boot, SQL</strong> and{" "}
             <strong className="text-white">MongoDB</strong>. I shipped <strong className="text-white">CareerAI</strong>{" "}
             — a production full-stack AI platform integrating OpenAI GPT-4o-mini and Gemini 2.0 Flash —
             and deployed a real-time object-detection system at <strong className="text-white">HAL</strong>'s
@@ -309,8 +335,8 @@ export function About() {
 
           <ul className="mt-8 grid gap-3 sm:grid-cols-2">
             {[
-              { icon: GraduationCap, t: "B.Tech CSE · AKTU · CGPA 8.00" },
-              { icon: Code2, t: "Java + Node.js Full Stack" },
+              { icon: GraduationCap, t: "B.Tech CSE · AKTU · CGPA 8.11" },
+              { icon: Code2, t: "Java + Spring Boot Full Stack" },
               { icon: Server, t: "Spring Boot · REST · JWT" },
               { icon: Sparkles, t: "100+ LeetCode · DSA enthusiast" },
             ].map(({ icon: Icon, t }, i) => (
@@ -356,13 +382,13 @@ export function About() {
 /* ------------------------------------------------------------------ */
 
 const stack = [
-  "Java", "Spring Boot", "Spring Security", "Servlets", "Node.js", "Express.js",
-  "REST API", "JWT", "bcryptjs", "MongoDB", "Mongoose", "MySQL",
-  "HTML5", "CSS3", "JavaScript", "React.js",
-  "DSA", "Git", "GitHub", "Postman", "Power BI", "VS Code",
+  "Java", "Spring Boot", "Spring Security", "Servlets",
+  "REST API", "JWT", "bcryptjs", "MongoDB", "Mongoose", "MySQL", "SQL",
+  "HTML5", "CSS", "JavaScript", "React.js",
+  "DSA", "Git", "GitHub", "Postman", "VS Code",
 ];
 
-const learning = new Set(["Power BI"]);
+const learning = new Set(["Spring Security"]);
 
 export function TechStack() {
   return (
@@ -419,21 +445,21 @@ const timeline = [
     icon: Briefcase,
     org: "JSpiders — Training & Development Center",
     role: "Java Full-Stack Developer (Trainee)",
-    period: "Aug 2025 — Apr 2026",
-    desc: "Building backend features with Java & Spring Boot. Shipped 10+ REST APIs (CRUD) cutting fetch time by 30%, implemented JWT auth with Spring Security, built React UIs, handled MySQL DML/DQL and worked in Agile sprints with Git/GitHub.",
+    period: "2025 — Present",
+    desc: "Learning real working industry standards and practical developer workflows. Hands-on training in enterprise Java, Spring Boot microservices, database architecture, and Agile collaboration. During this training, actively working on an AI Agent for their websites.",
   },
   {
     icon: Layers,
     org: "HAL — Hindustan Aeronautics Limited",
-    role: "Defense Manufacturing · Computer Vision",
+    role: "Internship Trainee",
     period: "2024",
-    desc: "Engineered and deployed a YOLOv8 + OpenCV real-time object-detection system at 25–30 FPS on HAL's defense manufacturing intranet — integrated end-to-end with existing infrastructure.",
+    desc: "Worked on practical internship assignments and gained valuable hands-on exposure to enterprise engineering environments, defense aerospace systems workflows, and structured problem solving.",
   },
   {
     icon: Workflow,
     org: "B.Tech — Computer Science & Engineering",
-    role: "KNIPSS Sultanpur · AKTU · CGPA 8.00",
-    period: "2022 — 2026",
+    role: "KNIPSS Sultanpur · AKTU · CGPA 8.11",
+    period: "2022 — 2026 (Final Year Complete Student)",
     desc: "DSA, DBMS, OOP, Operating Systems, Computer Networks, Web Development. 100+ LeetCode problems solved across Arrays, Trees, DP, Graphs and Recursion.",
   },
 ];
@@ -487,29 +513,29 @@ const projects = [
   {
     n: "01",
     title: "CareerAI — Full-Stack AI Career Platform",
-    desc: "Production-grade platform with AI Resume Analyzer, Live Job Search, GitHub Profile Analyzer and AI Career Coach. Engineered a Triple AI Fallback (OpenAI → Gemini → Smart Mock) for 100% uptime. JWT + bcryptjs auth with MongoDB (Mongoose) persistence.",
-    tech: ["Node.js", "Express", "MongoDB", "OpenAI GPT-4o-mini", "Gemini 2.0 Flash", "JWT", "bcryptjs"],
+    desc: "Production-grade career acceleration platform featuring AI Resume Analyzer, Live Job Search, GitHub Profile Analyzer and AI Career Coach. Engineered a resilient Triple AI Fallback pipeline (OpenAI → Gemini → Smart Mock) ensuring 100% uptime. JWT + bcryptjs secure auth with MongoDB persistence.",
+    tech: ["React", "Node.js", "MongoDB", "OpenAI GPT-4o", "Gemini Flash", "JWT"],
     image: projEmployee,
     href: "https://github.com/Priyanka12377",
-    span: "lg:col-span-2",
+    live: "https://github.com/Priyanka12377",
   },
   {
     n: "02",
-    title: "Real-Time Object Detection — HAL Defense",
-    desc: "Production computer-vision system delivering consistent 25–30 FPS object detection under demanding industrial conditions. Deployed on HAL's defense manufacturing intranet with seamless integration into existing infrastructure.",
-    tech: ["YOLOv8", "OpenCV", "Python"],
+    title: "The Eden Cafe — Premium Cafe Experience",
+    desc: "Sleek, responsive modern web application designed for a luxury cafe experience. Features smooth interactive menus, dynamic responsive UI layouts, and fast asset delivery. Optimized for both mobile and desktop screens.",
+    tech: ["HTML5", "CSS", "JavaScript", "Responsive UI", "Netlify"],
     image: projInventory,
     href: "https://github.com/Priyanka12377",
-    span: "",
+    live: "https://theedencafe.netlify.app/",
   },
   {
     n: "03",
-    title: "This Portfolio",
-    desc: "Premium, motion-driven portfolio engineered with React, TanStack Start, Tailwind v4, Motion and Lenis smooth scroll — glassmorphism, aurora gradients and magnetic micro-interactions throughout.",
-    tech: ["React", "TanStack Start", "Motion", "Tailwind v4", "Lenis"],
+    title: "AI Agent — Autonomous Web Assistant",
+    desc: "Intelligent autonomous web agent engineered to assist users in real-time. Capable of contextual reasoning, interactive task execution, and dynamic website interaction. Actively developed during industrial training.",
+    tech: ["Java", "Spring Boot", "AI Prompting", "REST API", "LLM Integration"],
     image: projInventory,
-    href: "#top",
-    span: "",
+    href: "https://github.com/Priyanka12377",
+    live: "https://github.com/Priyanka12377",
   },
 ];
 
@@ -529,7 +555,7 @@ export function Projects() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, delay: (i % 3) * 0.08 }}
-            className={`group relative overflow-hidden rounded-3xl glass ${p.span}`}
+            className="group relative overflow-hidden rounded-3xl glass flex flex-col justify-between"
           >
             <div className="relative aspect-[16/10] overflow-hidden">
               <img
@@ -543,9 +569,14 @@ export function Projects() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/30 to-transparent" />
               <div className="absolute left-5 top-4 font-serif text-2xl italic text-white/80">{p.n}</div>
               <div className="absolute right-4 top-4 flex gap-2 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                <a href={p.href} target="_blank" rel="noreferrer" className="grid h-9 w-9 place-items-center rounded-full glass-strong text-white hover:text-[#00E5FF]" aria-label="GitHub">
+                <a href={p.href} target="_blank" rel="noreferrer" className="grid h-9 w-9 place-items-center rounded-full glass-strong text-white hover:text-[#00E5FF] shadow-lg" aria-label="GitHub Repo">
                   <Github className="h-4 w-4" />
                 </a>
+                {p.live && (
+                  <a href={p.live} target="_blank" rel="noreferrer" className="grid h-9 w-9 place-items-center rounded-full bg-[#00E5FF] text-black hover:scale-105 transition-transform shadow-lg" aria-label="Live Demo">
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                )}
               </div>
             </div>
             <div className="p-6">
@@ -558,10 +589,15 @@ export function Projects() {
                   </span>
                 ))}
               </div>
-              <div className="mt-5 flex items-center gap-4 text-xs text-white/60">
-                <a href={p.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-[#00E5FF]">
-                  <Github className="h-3.5 w-3.5" /> Code
+              <div className="mt-6 flex items-center gap-4 text-xs font-medium border-t border-white/10 pt-4">
+                <a href={p.href} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-white/75 hover:text-[#00E5FF] transition-colors">
+                  <Github className="h-3.5 w-3.5" /> GitHub
                 </a>
+                {p.live && (
+                  <a href={p.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[#00E5FF] hover:underline ml-auto">
+                    Live Demo <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                )}
               </div>
             </div>
           </motion.article>
@@ -576,15 +612,17 @@ export function Projects() {
 /* ------------------------------------------------------------------ */
 
 const services = [
-  { icon: Server, title: "Backend Development", desc: "Robust APIs and services engineered for performance and maintainability." },
-  { icon: Workflow, title: "REST APIs", desc: "Versioned, well-documented APIs with clean contracts and proper error handling." },
-  { icon: Layers, title: "Full Stack Applications", desc: "End-to-end web apps from data model to polished React frontends." },
-  { icon: Database, title: "Database Design", desc: "Schema design, indexing and migrations for MySQL and Oracle SQL." },
-  { icon: Code2, title: "Java Development", desc: "Idiomatic Java, OOP, design patterns and JVM-friendly architecture." },
-  { icon: Zap, title: "Spring Boot Systems", desc: "Production-ready Spring Boot apps with security, JPA and best practices." },
+  { icon: Server, title: "Backend Development", desc: "Robust APIs and microservices engineered for high performance, fault tolerance, and clean modular architecture.", brief: "Backend engineering involves building the core logic, authentication gates, data processing pipelines, and server infrastructure that powers modern software. I specialize in Java & Spring Boot backend systems optimized for low latency and high scalability." },
+  { icon: Workflow, title: "REST APIs", desc: "Secure, versioned, well-documented RESTful APIs with clean JSON contracts and robust exception handling.", brief: "REST APIs serve as the reliable communication bridge between frontend client interfaces and database servers. I design stateless, scalable endpoints implementing proper HTTP status codes, pagination, filtering, and JWT authorization headers." },
+  { icon: Layers, title: "Full Stack Web Apps", desc: "End-to-end web applications bridging seamless database persistence with responsive modern React frontends.", brief: "Full stack development connects clean user interfaces with solid server foundations. I build snappy React frontends wired seamlessly to Spring Boot backend APIs, ensuring fluid state management and smooth UX transitions." },
+  { icon: Database, title: "Database Architecture", desc: "Efficient schema design, query optimization, indexing and relational modeling for SQL and NoSQL databases.", brief: "Data architecture dictates system speed and data integrity. I structure normalized MySQL/SQL schemas with strict foreign key constraints and design high-throughput document structures in MongoDB using Mongoose." },
+  { icon: Code2, title: "Enterprise Java", desc: "Idiomatic core Java, advanced multithreading, OOP design patterns and JVM-optimized software engineering.", brief: "Java remains the gold standard for enterprise grade backend systems. I write strict object-oriented code leveraging Java Collections, Streams API, concurrency utilities, and solid memory management principles." },
+  { icon: Bot, title: "AI Agent Integration", desc: "Intelligent autonomous web assistants and LLM tooling integrated directly into modern web applications.", brief: "AI agents transform static web pages into interactive, context-aware platforms. I build custom prompt engineering pipelines and wire autonomous LLM endpoints to help web visitors navigate and solve tasks dynamically." },
 ];
 
 export function Services() {
+  const [activeTopic, setActiveTopic] = useState<typeof services[0] | null>(null);
+
   return (
     <section id="services" className="relative py-32">
       <SectionHeading
@@ -610,12 +648,36 @@ export function Services() {
             </div>
             <h3 className="mt-5 text-lg font-semibold text-white">{s.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-white/65">{s.desc}</p>
-            <div className="mt-6 inline-flex items-center gap-1 text-xs text-white/45 transition-colors group-hover:text-[#00E5FF]">
+            <button
+              type="button"
+              onClick={() => setActiveTopic(s)}
+              className="mt-6 inline-flex items-center gap-1 text-xs font-medium text-[#00E5FF]/80 hover:text-[#00E5FF] transition-colors cursor-pointer"
+            >
               Learn more <ArrowUpRight className="h-3.5 w-3.5" />
-            </div>
+            </button>
           </motion.div>
         ))}
       </div>
+
+      {/* Modal for Learn More Topic Details */}
+      {activeTopic && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-lg glass-strong rounded-3xl p-8 border border-[#00E5FF]/30 shadow-2xl">
+            <button
+              type="button"
+              onClick={() => setActiveTopic(null)}
+              className="absolute top-6 right-6 text-white/50 hover:text-white text-sm bg-white/10 rounded-full h-8 w-8 flex items-center justify-center"
+            >
+              ✕
+            </button>
+            <div className="text-xs uppercase tracking-widest text-[#00E5FF] mb-2">Service Brief</div>
+            <h4 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+              <activeTopic.icon className="h-6 w-6 text-[#8A5CFF]" /> {activeTopic.title}
+            </h4>
+            <p className="text-base text-white/80 leading-relaxed">{activeTopic.brief}</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -626,17 +688,16 @@ export function Services() {
 
 const achievements = [
   { icon: Trophy, t: "1st Place — Badminton", d: "Intra-College Sports Tournament 2023–24." },
-  { icon: Code2, t: "100+ LeetCode Solved", d: "Arrays, Trees, DP, Graphs, Recursion." },
+  { icon: Code2, t: "100+ LeetCode Solved", d: "Arrays, Strings, Trees, DP & Graphs." },
   { icon: Server, t: "CareerAI Shipped", d: "Production AI platform · 100% uptime." },
-  { icon: Sparkles, t: "HAL CV Deployment", d: "25–30 FPS on defense intranet." },
-  { icon: GraduationCap, t: "CGPA 8.00 / 10", d: "B.Tech CSE · AKTU 2022–26." },
+  { icon: GraduationCap, t: "CGPA 8.11 / 10", d: "B.Tech CSE · AKTU 2022–26." },
 ];
 
 export function Achievements() {
   return (
     <section className="relative py-32">
       <SectionHeading eyebrow="Achievements" title={<>Milestones that <span className="text-aurora">shape me.</span></>} />
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-6 md:grid-cols-3 lg:grid-cols-5">
+      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-4 px-6 sm:grid-cols-4">
         {achievements.map((a, i) => (
           <motion.div
             key={a.t}
@@ -661,19 +722,19 @@ export function Achievements() {
 /* ------------------------------------------------------------------ */
 
 const certs = [
-  { t: "Python for Data Science", org: "IBM · Coursera", color: "from-[#8A5CFF] to-[#00E5FF]", h: "h-64" },
-  { t: "Java Full-Stack Trainee", org: "JSpiders Training", color: "from-[#00E5FF] to-[#FF4D9E]", h: "h-80" },
-  { t: "Real-Time CV @ HAL", org: "Defense Manufacturing", color: "from-[#FF4D9E] to-[#8A5CFF]", h: "h-72" },
-  { t: "100+ LeetCode Badge", org: "DSA Problem Solving", color: "from-[#8A5CFF] to-[#FFB36B]", h: "h-60" },
-  { t: "Spring Boot + JWT", org: "Backend Engineering", color: "from-[#00E5FF] to-[#8A5CFF]", h: "h-72" },
-  { t: "MongoDB Mongoose", org: "Persistent Architecture", color: "from-[#FF4D9E] to-[#FFB36B]", h: "h-64" },
+  { t: "Python for Data Science", org: "IBM · Coursera", color: "from-[#8A5CFF] to-[#00E5FF]" },
+  { t: "Java Full Stack Developer", org: "JSpiders Training", color: "from-[#00E5FF] to-[#FF4D9E]" },
+  { t: "Defense Training Exposure", org: "HAL Aerospace", color: "from-[#FF4D9E] to-[#8A5CFF]" },
+  { t: "100+ DSA Problem Solving", org: "LeetCode Platform", color: "from-[#8A5CFF] to-[#FFB36B]" },
+  { t: "Spring Boot Backend Systems", org: "Backend Specialization", color: "from-[#00E5FF] to-[#8A5CFF]" },
+  { t: "Add Certificate in Future", org: "Pending Recognition", color: "from-[#FF4D9E] to-[#00E5FF]", isFuture: true },
 ];
 
 export function Certificates() {
   return (
     <section className="relative py-32">
       <SectionHeading eyebrow="Certificates" title={<>Recognised <span className="text-aurora">credentials.</span></>} />
-      <div className="mx-auto columns-1 gap-4 px-6 sm:columns-2 lg:columns-3 max-w-6xl">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-5 px-6 sm:grid-cols-2 lg:grid-cols-3">
         {certs.map((c, i) => (
           <motion.div
             key={c.t}
@@ -681,15 +742,20 @@ export function Certificates() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: (i % 3) * 0.06 }}
-            className="mb-4 break-inside-avoid"
           >
-            <div className={`group relative overflow-hidden rounded-3xl glass ${c.h} flex flex-col justify-end p-6`}>
+            <div className="group relative overflow-hidden rounded-3xl glass min-h-[180px] flex flex-col justify-between p-7 hover:border-white/20 transition-all">
               <div className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${c.color} opacity-25 transition-opacity duration-500 group-hover:opacity-50`} />
-              <div className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full glass-strong">
-                <Star className="h-3.5 w-3.5 text-white" />
+              <div className="flex justify-between items-start">
+                <div className="text-xs uppercase tracking-[0.18em] text-white/60">{c.org}</div>
+                <div className="grid h-10 w-10 place-items-center rounded-full glass-strong">
+                  {c.isFuture ? (
+                    <Plus className="h-5 w-5 text-[#00E5FF] animate-pulse" />
+                  ) : (
+                    <Star className="h-4 w-4 text-[#00E5FF]" />
+                  )}
+                </div>
               </div>
-              <div className="text-xs uppercase tracking-[0.18em] text-white/55">{c.org}</div>
-              <div className="mt-1 text-lg font-semibold text-white">{c.t}</div>
+              <div className="mt-6 text-xl font-semibold text-white tracking-tight">{c.t}</div>
             </div>
           </motion.div>
         ))}
