@@ -538,6 +538,9 @@ const projects = [
     live: "https://github.com/Priyanka12377",
   },
 ];
+
+export function Projects() {
+  return (
     <section id="projects" className="relative py-32">
       <SectionHeading
         eyebrow="Featured Projects"
